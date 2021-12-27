@@ -14,3 +14,6 @@ image.YCbCr = rgbVersYCbCr(image.rgb);
 
 %% sous-echantillonage de la chrominance
 image.YCbCr_ech = sousEchantillonage(image.YCbCr, image.echantillonage.a, image.echantillonage.b);
+
+%% découpage en blocs de 8x8
+image.blocs = decoupage(image.YCbCr_ech);
