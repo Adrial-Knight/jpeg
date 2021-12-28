@@ -17,3 +17,6 @@ image.YCbCr_ech = sousEchantillonage(image.YCbCr, image.echantillonage.a, image.
 
 %% découpage en blocs de 8x8
 image.blocs = decoupage(image.YCbCr_ech);
+
+%% transformation en cosinus discrète
+image.DCT = transformationDCT(image.blocs);
