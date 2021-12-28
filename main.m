@@ -13,6 +13,7 @@ image.Q = [16 11 10 16  24  40  51  61;
            24 35 55 64  81 104 113  92;
            49 64 78 87 103 121 120 101;
            72 92 95 98 112 100 103  99];
+image.EOB = Inf;
 
 %% chargment de l'image
 image.rgb = imread("image/"+image.nom);
@@ -34,3 +35,6 @@ image.quantifie = quantificationCanaux(image.DCT, image.Q);
 
 %% lecture en zigzag des blocs des canaux
 image.ZigZag = ZigZagCanaux(image.quantifie);
+
+%% compression des fins de blocs
+image.RLE = RLE0Canaux(image.ZigZag, image.EOB);

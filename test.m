@@ -77,3 +77,10 @@ zigzag.solution2 = 1:81;
 zigzag.calcul2 = ZigZag(zigzag.origine2);
 zigzag.erreur2 = zigzag.calcul2 - zigzag.solution2;
 tests.zigzagImpair = sum(abs(zigzag.erreur2(:))) == 0;
+
+%% codage de fin de bloc
+RLE.EOB = Inf;
+RLE.origine = ZigZag(Qbloc.solution);
+RLE.solution = [79 0 -2 -1 -1 -1 0 0 -1 RLE.EOB];
+RLE.calcul = RLE0(RLE.origine, RLE.EOB);
+tests.RLE = sum(RLE.calcul == RLE.solution) == length(RLE.solution);
