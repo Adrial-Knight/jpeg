@@ -46,3 +46,34 @@ Qbloc.calcul = quantifie(Qbloc.origine, Qbloc.Q);
 Qbloc.erreur = Qbloc.calcul - Qbloc.solution;
 
 tests.Q = sum(abs(Qbloc.erreur(:))) == 0;
+
+%% lecture en ZigZag d'un bloc de dimension pair
+zigzag.origine1 = [ 1  2  6  7 15 16 28 29;
+                    3  5  8 14 17 27 30 43;
+                    4  9 13 18 26 31 42 44;
+                   10 12 19 25 32 41 45 54;
+                   11 20 24 33 40 46 53 55;
+                   21 23 34 39 47 52 56 61;
+                   22 35 38 48 51 57 60 62;
+                   36 37 49 50 58 59 63 64];
+
+zigzag.solution1 = 1:64;
+zigzag.calcul1 = ZigZag(zigzag.origine1);
+zigzag.erreur1 = zigzag.calcul1 - zigzag.solution1;
+tests.zigzagPair = sum(abs(zigzag.erreur1(:))) == 0;
+
+%% lecture en ZigZag d'un bloc de dimension impair
+zigzag.origine2 = [ 1  2  6  7 15 16 28 29 45;
+                    3  5  8 14 17 27 30 44 46;
+                    4  9 13 18 26 31 43 47 60;
+                   10 12 19 25 32 42 48 59 61;
+                   11 20 24 33 41 49 58 62 71;
+                   21 23 34 40 50 57 63 70 72;
+                   22 35 39 51 56 64 69 73 78;
+                   36 38 52 55 65 68 74 77 79;
+                   37 53 54 66 67 75 76 80 81];
+
+zigzag.solution2 = 1:81;
+zigzag.calcul2 = ZigZag(zigzag.origine2);
+zigzag.erreur2 = zigzag.calcul2 - zigzag.solution2;
+tests.zigzagImpair = sum(abs(zigzag.erreur2(:))) == 0;

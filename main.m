@@ -31,3 +31,6 @@ image.DCT = transformationDCT(image.blocs);
 
 %% quantification
 image.quantifie = quantificationCanaux(image.DCT, image.Q);
+
+%% lecture en zigzag des blocs des canaux
+image.ZigZag = ZigZagCanaux(image.quantifie);
