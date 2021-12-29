@@ -6,6 +6,6 @@ function x = RLE0(x, EOB)
             j = i;
         end
     end
-    x = x(1:j+1);
-    x(j+1) = EOB;
+    x = num2cell(x(1:j+1));
+    x{j+1} = EOB;
 end

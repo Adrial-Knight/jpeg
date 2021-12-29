@@ -83,7 +83,7 @@ RLE.EOB = Inf;
 RLE.origine = ZigZag(Qbloc.solution);
 RLE.solution = [79 0 -2 -1 -1 -1 0 0 -1 RLE.EOB];
 RLE.calcul = RLE0(RLE.origine, RLE.EOB);
-tests.RLE = sum(RLE.calcul == RLE.solution) == length(RLE.solution);
+tests.RLE = sum(cell2mat(RLE.calcul) == RLE.solution) == length(RLE.solution);
 
 %% codage de huffman
 huff.mot = "Trois petites tortues";
