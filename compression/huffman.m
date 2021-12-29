@@ -16,13 +16,13 @@ function [code, table] = huffman(entree)
     clefs = table.keys;
     for i = 1:n
         frequence{i, 1} = clefs(i);
-        frequence{i, 2} = table(num2str(str2double(clefs(i))));
+        frequence{i, 2} = table(clefs{i});
     end
-    frequence = trie(frequence, 2);
+    composition_mot = frequence; % utilisé plus tard pour connaitre la mémoire à allouer pour le codage du mot
 
 %% construction de l'arbre
     arbre = cell(1, n-1);
-    arbre{1} = frequence;
+    arbre{1} = trie(frequence, 2);
     for i = 1:n-2
         frequence{n-i, 1} = strcat(strcat(frequence{n-i+1, 1}, ","), frequence{n-i, 1}); % fusion
         frequence{n-i, 2} = frequence{n-i+1, 2} + frequence{n-i, 2}; % somme proba
@@ -35,7 +35,7 @@ function [code, table] = huffman(entree)
 %% parcours de l'arbre pour remplir la table
     % nettoyage de la table
     for i = 1:n
-        table(num2str(str2double(clefs(i)))) = [];
+        table(clefs{i}) = [];
     end
     etage = arbre{n-1};
     % première attribution
@@ -43,7 +43,7 @@ function [code, table] = huffman(entree)
         mot = etage{j, 1};
         lettres = strsplit(mot{1}, ",");
         for i = 1:length(lettres)
-            table(num2str(str2double(lettres(i)))) = [table(num2str(str2double(lettres(i)))) j-1];
+            table(lettres{i}) = [table(lettres{i}) j-1];
         end
     end
     % les autres attributions
@@ -54,16 +54,28 @@ function [code, table] = huffman(entree)
             mot = etage{indice(j), 1};
             lettres = strsplit(mot{1}, ",");
             for i = 1:length(lettres)
-                table(num2str(str2double(lettres(i)))) = [table(num2str(str2double(lettres(i)))) j-1];
+                table(lettres{i}) = [table(lettres{i}) j-1];
             end
         end
     end
 
 %% codage du mot renseigné
-    code = [];
-    for i = 1:length(entree)
-        code = [code table(num2str(entree(i)))];
+    % évaluation de la mémoire nécessaire
+    nCode = 0;
+    for i = 1:length(composition_mot)
+        nCode = nCode + composition_mot{i, 2} * length(table(composition_mot{i, 1}{1}));
     end
+
+    % codage
+    code = zeros(1, nCode);
+    curseur = 1;
+    for i = 1:length(entree)
+        codage = table(num2str(entree(i)));
+        ncodage = length(codage);
+        code(curseur:curseur+ncodage-1) = codage;
+        curseur = curseur + ncodage;
+    end
+    code = logical(code); % conversion en booléen
 end
 
 function tab = trie(tab, i)
