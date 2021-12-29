@@ -86,5 +86,12 @@ RLE.calcul = RLE0(RLE.origine, RLE.EOB);
 tests.RLE = sum(RLE.calcul == RLE.solution) == length(RLE.solution);
 
 %% codage de huffman
-huff.mot = [0 1 2 0 0 3 5 1];
+huff.mot = "Trois petites tortues";
 [huff.code, huff.table] = huffman(huff.mot);
+
+huff.solution = [1 1 1 0 1 1 0 0 0 0 1 0 0 0 0 1 ...
+                 0 0 1 0 1 1 1 1 1 0 0 1 0 1 0 0 ...
+                 0 0 0 0 1 0 0 0 1 1 0 0 1 0 1 0 ...
+                 1 0 0 0 0 1 1 1 0 0 1 0 0 1 1 0 ...
+                 0 1 1 0 0];
+tests.huffCode = sum(huff.code ~= huff.solution) == 0;
