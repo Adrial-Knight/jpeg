@@ -93,3 +93,14 @@ tests.huffCode = (177 == length(huff.code));
 %% décodage de huffman
 huff.motDecode = huffmanDecode(huff.code, huff.table);
 tests.huffDecode = (huff.mot == huff.motDecode);
+
+%% création d'un bloc à partir d'un vecteur
+zagzig.origine1 = zigzag.solution1;
+zagzig.solution1 = zigzag.origine1;
+zagzig.calcul1 = ZagZig(zagzig.origine1);
+tests.zagzigPair = sum(sum(zagzig.solution1 == zagzig.calcul1)) == length(zagzig.origine1);
+
+zagzig.origine2 = zigzag.solution2;
+zagzig.solution2 = zigzag.origine2;
+zagzig.calcul2 = ZagZig(zagzig.origine2);
+tests.zagzigImpair = sum(sum(zagzig.solution2 == zagzig.calcul2)) == length(zagzig.origine2);
