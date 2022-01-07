@@ -26,6 +26,10 @@ DCTbloc.erreur = DCTbloc.calcul - DCTbloc.solution;
 
 tests.DCT = sum(abs(DCTbloc.erreur(:))) == 0;
 
+%% transformation DCTI sur le bloc 8x8
+DCTbloc.DCTI = DCTI(DCTbloc.solution);
+tests.DCTI = sum((DCTbloc.DCTI(:) - DCTbloc.origine(:)) > 1) == 0;
+
 %% quantification du précédent bloc 8x8
 Qbloc.origine = DCTbloc.solution;
 Qbloc.Q = [16 11 10 16  24  40  51  61;
@@ -84,6 +88,10 @@ RLE.origine = ZigZag(Qbloc.solution);
 RLE.solution = [79 0 -2 -1 -1 -1 0 0 -1 RLE.EOB];
 RLE.calcul = RLE0(RLE.origine, RLE.EOB);
 tests.RLE = sum(cell2mat(RLE.calcul) == RLE.solution) == length(RLE.solution);
+
+%% decodage de la fin du bloc
+RLE.decode = RLEpad0(RLE.solution, 64);
+tests.RLEDecode = sum(RLE.decode == RLE.origine) == 64;
 
 %% codage de huffman
 huff.mot = "trois petites tortues trottaient sur un toit tres etroit";
